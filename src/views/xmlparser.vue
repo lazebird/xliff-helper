@@ -1,18 +1,25 @@
 <template>
   <div class="example">
-    <a-form layout="inline" :model="conf">
+    <a-form class="confbar" layout="inline" :model="conf">
       <a-form-item label="unitName"> <a-input v-model:value="conf.unitName" /> </a-form-item>
       <a-form-item label="srcName"> <a-input v-model:value="conf.srcName" /> </a-form-item>
       <a-form-item label="tgtName"> <a-input v-model:value="conf.tgtName" /> </a-form-item>
     </a-form>
     <br />
 
-    <div class="btnbar">
-      <input type="file" @change="upload_xliff" />
-      <button @click="extract">Extract Souces</button>
-      <input type="file" @change="upload_target" />
-      <button @click="save">Save</button>
-    </div>
+    <a-row>
+      <a-col :span="8">
+        <input type="file" @change="upload_xliff" accept=".xliff, text/xml" />
+      </a-col>
+      <a-col :span="8">
+        <a-row class="btnrow"> <button @click="extract">Extract Souces</button> </a-row>
+        <br />
+        <a-row class="btnrow"> <button @click="save">Save</button> </a-row>
+      </a-col>
+      <a-col :span="8">
+        <input type="file" @change="upload_target" accept=".json, application/JSON" />
+      </a-col>
+    </a-row>
     <br />
 
     <a-table v-if="map.length" :dataSource="map" :columns="columns" :rowKey="(record, index) => index" class="ant-table-striped" :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" />
@@ -32,6 +39,17 @@
   var xmlDoc;
   const conf = ref({ unitName: 'trans-unit', srcName: 'source', tgtName: 'target' });
   const map = ref([]);
+
+  function str2file(s, filename) {
+    var e = document.createElement('a');
+    e.setAttribute('download', filename);
+    e.style.display = 'none';
+    var blob = new Blob([s]);
+    e.href = URL.createObjectURL(blob);
+    document.body.appendChild(e);
+    e.click();
+    document.body.removeChild(e);
+  }
 
   function XML2obj(e) {
     var text = e.target.result;
@@ -63,6 +81,7 @@
   function extract() {
     const data = {};
     for (const m of map.value) data[m.id] = m.srcText;
+    str2file(JSON.stringify(data), 'sources.json');
     console.log(JSON.stringify(data));
   }
   function upload_target(e) {
@@ -71,14 +90,19 @@
     reader.onload = Json2obj;
   }
   function save() {
+    str2file(new XMLSerializer().serializeToString(xmlDoc), 'result.xliff');
     console.log(xmlDoc);
   }
 </script>
 <style scoped>
-  .btnbar * {
-    margin-right: 40px;
-  }
   .ant-table-striped :deep(.table-striped) td {
     background-color: #fafafa;
+  }
+  .confbar * {
+    margin: auto;
+  }
+  .btnrow button {
+    margin: auto;
+    width: 120px;
   }
 </style>
