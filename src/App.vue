@@ -1,9 +1,7 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   <xmlparserVue />
 </template>
 <script setup>
-  import HelloWorld from './views/HelloWorld.vue';
   import xmlparserVue from './views/xmlparser.vue';
 </script>
 <style>

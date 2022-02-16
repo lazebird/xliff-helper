@@ -1,12 +1,12 @@
 {
   "name": "@lazebird/xliff-helper",
-  "version": "0.1.8",
+  "version": "0.1.0",
   "keywords": [
     "vue",
     "vue3",
     "vite",
-    "outline",
-    "toc"
+    "xliff",
+    "xml"
   ],
   "author": "lazebird",
   "license": "MIT",

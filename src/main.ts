@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
+import Antd from 'ant-design-vue';
 import App from './App.vue';
-import { useOutline } from '@/components/toc/index';
+import 'ant-design-vue/dist/antd.css';
 
 const app = createApp(App);
-useOutline(app);
-app.mount('#app');
+app.use(Antd).mount('#app');

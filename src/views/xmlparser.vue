@@ -1,45 +1,46 @@
 <template>
   <div class="example">
+    <a-form layout="inline" :model="conf">
+      <a-form-item label="unitName"> <a-input v-model:value="conf.unitName" /> </a-form-item>
+      <a-form-item label="srcName"> <a-input v-model:value="conf.srcName" /> </a-form-item>
+      <a-form-item label="tgtName"> <a-input v-model:value="conf.tgtName" /> </a-form-item>
+    </a-form>
+    <br />
+
     <div class="btnbar">
       <input type="file" @change="upload_xliff" />
       <button @click="extract">Extract Souces</button>
       <input type="file" @change="upload_target" />
       <button @click="save">Save</button>
     </div>
-    <div>
-      <table v-if="map.length">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Source</th>
-            <th>Target</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(e, index) in map" :key="index">
-            <td>{{ e.id }}</td>
-            <td>{{ e.srcText }}</td>
-            <td>{{ e.tgtText }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <br />
+
+    <a-table v-if="map.length" :dataSource="map" :columns="columns" :rowKey="(record, index) => index" class="ant-table-striped" :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" />
   </div>
 </template>
 
 <script setup>
   import { ref } from 'vue';
+
+  const columns = [
+    { title: 'ID', dataIndex: 'id' },
+    { title: 'Source', dataIndex: 'srcText' },
+    { title: 'Target', dataIndex: 'tgtText' },
+    { title: 'New', dataIndex: 'newtgt' },
+  ];
+
   var xmlDoc;
+  const conf = ref({ unitName: 'trans-unit', srcName: 'source', tgtName: 'target' });
   const map = ref([]);
 
   function XML2obj(e) {
     var text = e.target.result;
     var domParser = new DOMParser();
     xmlDoc = domParser.parseFromString(text, 'text/xml');
-    var transUnits = xmlDoc.querySelectorAll('trans-unit');
+    var transUnits = xmlDoc.querySelectorAll(conf.value.unitName);
     for (const u of transUnits) {
-      const source = u.querySelector('source');
-      const target = u.querySelector('target');
+      const source = u.querySelector(conf.value.srcName);
+      const target = u.querySelector(conf.value.tgtName);
       map.value.push({ id: u.id, source, target, srcText: source.innerHTML, tgtText: target.innerHTML });
     }
     // console.log(map);
@@ -47,7 +48,10 @@
   function Json2obj(e) {
     var text = e.target.result;
     var obj = JSON.parse(text);
-    for (const m of map.value) m.target.innerHTML = obj[m.id] ?? m.tgtText;
+    for (const m of map.value) {
+      m.target.innerHTML = obj[m.id] ?? m.tgtText;
+      m.newtgt = obj[m.id] ?? m.newtgt;
+    }
     console.log(obj);
   }
   function upload_xliff(e) {
@@ -72,7 +76,9 @@
 </script>
 <style scoped>
   .btnbar * {
-    text-align: center;
     margin-right: 40px;
+  }
+  .ant-table-striped :deep(.table-striped) td {
+    background-color: #fafafa;
   }
 </style>
