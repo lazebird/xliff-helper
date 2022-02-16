@@ -2,6 +2,7 @@
   <div class="example">
     <a-form class="actionbar" layout="inline" :model="action">
       <a-form-item label="Home"> <a href="https://github.com/lazebird/xliff-helper" target="_blank">@lazebird/xliff-helper</a> </a-form-item>
+      <a-form-item label="PostFunc"> <a-input v-model:value="action.postFunc" allow-clear /> </a-form-item>
       <a-form-item label="Filter"> <a-input v-model:value="action.searchVal" allow-clear /> </a-form-item>
     </a-form>
 
@@ -51,7 +52,7 @@ const columns = [
 ];
 
 var xmlDoc;
-const action = ref({ searchVal: '' });
+const action = ref({ searchVal: '', postFunc: '(s)=>s.replace(/id\\s*=\\s*\\"\\s*(\\d+)\\s*"/g, "id=\\"$1\\"")' });
 const conf = ref({ idName: 'id', unitName: 'trans-unit', srcName: 'source', tgtName: 'target' });
 const map = ref([]);
 const ignPats = ref(['SWITCH.*#']);
@@ -106,17 +107,16 @@ function XML2obj(e) {
 function Json2obj(e) {
   var text = e.target.result;
   var obj = JSON.parse(text);
+  let postFunc = action.value.postFunc ? eval(action.value.postFunc) : (e) => e;
+  // console.log(typeof postFunc, postFunc, postFunc('test: id = " 3" abc'));
   for (const m of map.value) {
     try {
+      if (obj[m.id]) obj[m.id] = postFunc(obj[m.id]);
       if (isIgnore(m.srcText)) m.target.innerHTML = m.srcText;
       else m.target.innerHTML = obj[m.id] ?? m.tgtText;
       m.newtgt = m.target.innerHTML;
     } catch (e) {
-      console.log(e);
-      console.log(m);
-      console.log(m.srcText);
-      console.log(isIgnore(m.srcText));
-      console.log(obj[m.id]);
+      console.log(e, m, isIgnore(m.srcText), obj[m.id]);
     }
   }
   // console.log(obj);
