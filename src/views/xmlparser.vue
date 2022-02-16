@@ -1,6 +1,7 @@
 <template>
   <div class="example">
     <a-form class="confbar" layout="inline" :model="conf">
+      <a-form-item label="idName"> <a-input v-model:value="conf.idName" /> </a-form-item>
       <a-form-item label="unitName"> <a-input v-model:value="conf.unitName" /> </a-form-item>
       <a-form-item label="srcName"> <a-input v-model:value="conf.srcName" /> </a-form-item>
       <a-form-item label="tgtName"> <a-input v-model:value="conf.tgtName" /> </a-form-item>
@@ -37,7 +38,7 @@
   ];
 
   var xmlDoc;
-  const conf = ref({ unitName: 'trans-unit', srcName: 'source', tgtName: 'target' });
+  const conf = ref({ idName: 'id', unitName: 'trans-unit', srcName: 'source', tgtName: 'target' });
   const map = ref([]);
 
   function str2file(s, filename) {
@@ -59,7 +60,7 @@
     for (const u of transUnits) {
       const source = u.querySelector(conf.value.srcName);
       const target = u.querySelector(conf.value.tgtName);
-      map.value.push({ id: u.id, source, target, srcText: source.innerHTML, tgtText: target.innerHTML });
+      map.value.push({ id: u[conf.value.idName], source, target, srcText: source.innerHTML, tgtText: target.innerHTML });
     }
     // console.log(map);
   }
