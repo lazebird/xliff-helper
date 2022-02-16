@@ -5,6 +5,7 @@
       <a-form-item label="unitName"> <a-input v-model:value="conf.unitName" /> </a-form-item>
       <a-form-item label="srcName"> <a-input v-model:value="conf.srcName" /> </a-form-item>
       <a-form-item label="tgtName"> <a-input v-model:value="conf.tgtName" /> </a-form-item>
+      <a-form-item label="Home"> <a href="https://github.com/lazebird/xliff-helper" target="_blank">Github</a> </a-form-item>
     </a-form>
     <br />
 
