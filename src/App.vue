@@ -1,9 +1,10 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <xmlparserVue />
 </template>
 <script setup>
   import HelloWorld from './views/HelloWorld.vue';
+  import xmlparserVue from './views/xmlparser.vue';
 </script>
 <style>
   #app {
