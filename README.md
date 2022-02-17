@@ -3,7 +3,7 @@
 ## 介绍
 
 - 本项目缘起于 google 翻译不支持 xliff 文件。
-- [预览](https://lazebird.github.io/xliff-helper/){:target="_blank"}
+- <a href="https://lazebird.github.io/xliff-helper/" target="_blank">预览</a>
 
 ## 依赖
 
