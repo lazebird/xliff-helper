@@ -57,6 +57,7 @@
         if (isIgnore(m.srcText)) m.target.innerHTML = m.srcText;
         else m.target.innerHTML = obj[m.id] ?? m.tgtText;
         m.newtgt = m.target.innerHTML;
+        if (m.target.getAttribute('state') === 'needs-translation') m.target.setAttribute('state', 'translated');
       } catch (e) {
         console.log(e, m, isIgnore(m.srcText), obj[m.id]);
       }
