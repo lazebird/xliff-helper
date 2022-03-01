@@ -1,6 +1,6 @@
 {
   "name": "@lazebird/xliff-helper",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "keywords": [
     "vue",
     "vue3",
@@ -46,6 +46,7 @@
     "@typescript-eslint/parser": "^5.12.0",
     "@vitejs/plugin-vue": "^2.2.0",
     "@vue/compiler-sfc": "^3.2.31",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.9.0",
     "eslint-define-config": "^1.2.5",
     "eslint-plugin-vue": "^8.4.1",
@@ -55,5 +56,10 @@
     "vite": "^2.8.3",
     "vue-eslint-parser": "^8.2.0",
     "vue-tsc": "^0.29.8"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

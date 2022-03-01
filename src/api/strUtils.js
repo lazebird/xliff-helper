@@ -4,7 +4,7 @@ function xml2obj(xmlDoc, conf) {
   for (const u of transUnits) {
     const source = u.querySelector(conf.srcName);
     const target = u.querySelector(conf.tgtName);
-    map.push({ id: u[conf.idName], source, target, srcText: source.innerHTML, tgtText: target.innerHTML });
+    map.push({ id: u[conf.idName], unit: u, source, target, srcText: source.innerHTML, tgtText: target.innerHTML });
   }
   return map;
 }

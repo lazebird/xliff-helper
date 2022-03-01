@@ -7,7 +7,7 @@
     <a-row>
       <a-col :span="8">
         <label>XLIFF/XML </label>
-        <input type="file" @change="upload_xliff" accept=".xliff, text/xml" />
+        <input type="file" @change="upload_xliff" accept=".xliff, .mxliff, text/xml" />
       </a-col>
       <a-col :span="8">
         <a-row class="btnrow"> <button @click="extract">Extract Souces</button> </a-row>
@@ -33,11 +33,13 @@
   import configVue from './config.vue';
   import tableVue from './table.vue';
   import { str2file, xml2obj, blob2obj } from '@/api/strUtils';
+  import { basename, extname } from '@/api/path';
 
-  var xmlDoc;
   const action = ref({ searchVal: '', postFunc: '(s)=>s.replace(/id\\s*=\\s*\\"\\s*(\\d+)\\s*"/g, "id=\\"$1\\"")' });
   const conf = ref({ idName: 'id', unitName: 'trans-unit', srcName: 'source', tgtName: 'target' });
   const ignPats = ref(['SWITCH.*#']);
+
+  const info = { suffix: '-res' };
   const map = ref([]);
   const filterData = computed(() => map.value.filter((m) => !action.value.searchVal || m.tgtText.indexOf(action.value.searchVal) !== -1 || m.srcText.indexOf(action.value.searchVal) !== -1));
   // watchEffect(() => (filterData.value = map.value.filter((m) => !action.value.searchVal || m.tgtText.indexOf(action.value.searchVal) !== -1 || m.srcText.indexOf(action.value.searchVal) !== -1)));
@@ -58,13 +60,18 @@
         else m.target.innerHTML = obj[m.id] ?? m.tgtText;
         m.newtgt = m.target.innerHTML;
         if (m.target.getAttribute('state') === 'needs-translation') m.target.setAttribute('state', 'translated');
+        if (m.unit.getAttribute('m:confirmed') === '0') m.unit.setAttribute('m:confirmed', '1');
+        // console.log('[jsonProc] attr names ', m.unit.getAttributeNames());
       } catch (e) {
         console.log(e, m, isIgnore(m.srcText), obj[m.id]);
       }
     }
     // console.log(obj);
   }
-  const upload_xliff = (e) => blob2obj(e.target.files[0], (e) => (map.value = xml2obj((xmlDoc = new DOMParser().parseFromString(e.target.result, 'text/xml')), conf.value)));
+  const upload_xliff = (e) => {
+    info.src = e.target.files[0].name;
+    blob2obj(e.target.files[0], (e) => (map.value = xml2obj((info.xmlDoc = new DOMParser().parseFromString(e.target.result, 'text/xml')), conf.value)));
+  };
   const upload_target = (e) => blob2obj(e.target.files[0], (e) => jsonProc(e.target.result));
 
   const extract = () => {
@@ -72,10 +79,10 @@
     for (const m of map.value) data[m.id] = m.srcText;
     str2file(JSON.stringify(data), 'sources.json');
   };
-  const save = () => str2file(new XMLSerializer().serializeToString(xmlDoc), 'result.xliff');
+  const save = () => str2file(new XMLSerializer().serializeToString(info.xmlDoc), basename(info.src, extname(info.src)) + info.suffix + extname(info.src));
 
   function do_test() {
-    console.log('xmlDoc ', xmlDoc);
+    console.log('info ', info);
     console.log('ignPats ', ignPats.value);
     let postFunc = action.value.postFunc ? eval(action.value.postFunc) : (e) => e;
     console.log(typeof postFunc, postFunc, postFunc('test: id = " 3" abc'));
