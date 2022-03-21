@@ -1,28 +1,30 @@
 {
-  "name": "@lazebird/xliff-helper",
-  "version": "0.1.6",
+  "name": "@lazebird/jtools",
+  "version": "0.1.7",
   "keywords": [
     "vue",
     "vue3",
     "vite",
     "xliff",
-    "xml"
+    "xml",
+    "i18n",
+    "solitaire"
   ],
   "author": "lazebird",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lazebird/xliff-helper/issues"
+    "url": "https://github.com/lazebird/jtools/issues"
   },
-  "homepage": "https://github.com/lazebird/xliff-helper",
+  "homepage": "https://github.com/lazebird/jtools",
   "files": [
     "dist"
   ],
-  "main": "./dist/xliff-helper.umd.js",
-  "module": "./dist/xliff-helper.es.js",
+  "main": "./dist/jtools.umd.js",
+  "module": "./dist/jtools.es.js",
   "exports": {
     ".": {
-      "import": "./dist/xliff-helper.es.js",
-      "require": "./dist/xliff-helper.umd.js"
+      "import": "./dist/jtools.es.js",
+      "require": "./dist/jtools.umd.js"
     }
   },
   "private": false,
@@ -37,6 +39,7 @@
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js"
   },
   "dependencies": {
+    "@zip.js/zip.js": "^2.4.7",
     "ant-design-vue": "^2.2.8",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"

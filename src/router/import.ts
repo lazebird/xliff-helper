@@ -14,4 +14,4 @@ for (const path in modules) {
   const name = uri2name(uri);
   routes.push({ path: uri, name, component: modules[path] });
 }
-console.log('routes', routes);
+// console.log('routes', routes);

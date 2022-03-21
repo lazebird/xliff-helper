@@ -6,6 +6,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.12.0
   '@vitejs/plugin-vue': ^2.2.0
   '@vue/compiler-sfc': ^3.2.31
+  '@zip.js/zip.js': ^2.4.7
   ant-design-vue: ^2.2.8
   cz-conventional-changelog: 3.3.0
   eslint: ^8.9.0
@@ -21,6 +22,7 @@ specifiers:
   vue-tsc: ^0.29.8
 
 dependencies:
+  '@zip.js/zip.js': 2.4.7
   ant-design-vue: 2.2.8_4f726de02e89ff745196f225ebb1bbcf
   vue: 3.2.31
   vue-router: 4.0.14_vue@3.2.31
@@ -593,6 +595,10 @@ packages:
 
   /@vue/shared/3.2.31:
     resolution: {integrity: sha512-ymN2pj6zEjiKJZbrf98UM2pfDd6F2H7ksKw7NDt/ZZ1fh5Ei39X5tABugtT03ZRlWd9imccoK0hE8hpjpU7irQ==}
+
+  /@zip.js/zip.js/2.4.7:
+    resolution: {integrity: sha512-IbRUgSsPcnVth4fBljrQDfI6nZO5VqW1/49j9rMAShZ7sB8noRYgQR4nY9jeRw5ZrUM6lZrsuUr8OMF4M3mrsw==}
+    dev: false
 
   /acorn-jsx/5.3.2_acorn@8.7.0:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
