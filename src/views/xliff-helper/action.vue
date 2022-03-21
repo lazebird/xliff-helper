@@ -1,6 +1,5 @@
 <template>
   <a-form class="actionbar" layout="inline" :model="action">
-    <a-form-item label="Home"> <a href="https://github.com/lazebird/xliff-helper" target="_blank">@lazebird/xliff-helper</a> </a-form-item>
     <a-form-item label="PostFunc"> <a-input v-model:value="action.postFunc" allow-clear /> </a-form-item>
     <a-form-item label="Filter"> <a-input v-model:value="action.searchVal" allow-clear /> </a-form-item>
   </a-form>

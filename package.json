@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "ant-design-vue": "^2.2.8",
-    "vue": "^3.2.31"
+    "vue": "^3.2.31",
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@types/node": "^17.0.18",
