@@ -1,13 +1,13 @@
 # lazebird/jtools
 
 - 一个基于 web 的小工具集合
+- <a href="https://lazebird.github.io/jtools/" target="_blank">预览</a>
 
 ## xliffHelper
 
 ### 介绍
 
 - 本项目缘起于 google 翻译不支持 xliff 文件。
-- <a href="https://lazebird.github.io/xliff-helper/" target="_blank">预览</a>
 
 ### 依赖
 
@@ -46,7 +46,6 @@
 
 - web 国际化翻译辅助工具
 - 主要实现结构化翻译目录和单翻译文件的互相转换功能
-- <a href="https://lazebird.github.io/i18n-helper/" target="_blank">预览</a>
 
 ### 用法
 
@@ -71,7 +70,6 @@
 ### 介绍
 
 - 群接龙数据可视化工具
-- <a href="https://lazebird.github.io/solitaire-count/" target="_blank">预览</a>
 
 ### 使用
 
