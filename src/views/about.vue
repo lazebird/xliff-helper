@@ -12,7 +12,6 @@
 
   const { pkg, lastBuildTime } = __APP_INFO__;
   const { name, version, homepage, license, dependencies, devDependencies } = pkg;
-  document.title = name;
   const info = [
     { name: 'Name', value: name, link: homepage },
     { name: 'License', value: license },
