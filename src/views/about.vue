@@ -15,8 +15,7 @@
   const info = [
     { name: 'Name', value: name, link: homepage },
     { name: 'License', value: license },
-    { name: 'Version', value: version },
-    { name: 'Last Build', value: lastBuildTime },
+    { name: 'Version', value: version + ` (Build: ${lastBuildTime})` },
   ];
   const prodDeps = Object.keys(dependencies).map((k) => ({ name: k, value: dependencies[k] }));
   const devDeps = Object.keys(devDependencies).map((k) => ({ name: k, value: devDependencies[k] }));

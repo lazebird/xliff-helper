@@ -8,7 +8,8 @@
     "xliff",
     "xml",
     "i18n",
-    "solitaire"
+    "solitaire",
+    "openAPI"
   ],
   "author": "lazebird",
   "license": "MIT",
