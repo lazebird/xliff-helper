@@ -1,6 +1,6 @@
 {
   "name": "@lazebird/jtools",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "keywords": [
     "vue",
     "vue3",
@@ -39,8 +39,9 @@
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
     "@zip.js/zip.js": "^2.4.7",
-    "ant-design-vue": "^2.2.8",
+    "ant-design-vue": "3.1.0-rc.2",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"
   },

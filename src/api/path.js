@@ -1,6 +1,6 @@
-function basename(path, ext) {
+function basename(path, ext = '') {
   const name = path.split('/').reverse()[0];
-  return name.slice(0, name.length - ext?.length);
+  return name.slice(0, name.length - ext.length);
 }
 
 function dirname(path) {
