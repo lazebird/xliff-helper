@@ -43,6 +43,7 @@
     "@ant-design/icons-vue": "^6.1.0",
     "@zip.js/zip.js": "^2.4.7",
     "ant-design-vue": "3.1.0-rc.2",
+    "less": "^4.1.2",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"
   },
