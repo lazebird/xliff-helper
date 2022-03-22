@@ -34,4 +34,8 @@ function str2file(s, filename) {
   blob2file(new Blob([s]), filename);
 }
 
-export { xml2obj, blob2obj, blob2file, str2file };
+async function custom_upload(info, onload, encoding = 'UTF-8') {
+  await blob2obj(info.file, (e) => onload(e.target.result), encoding);
+  info.onSuccess('success', info.file);
+}
+export { xml2obj, blob2obj, blob2file, str2file, custom_upload };

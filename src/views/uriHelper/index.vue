@@ -9,12 +9,12 @@
       <a-row>
         <a-col :span="12">
           <a-form-item label="Result">
-            <a v-if="data.length" @click="copy(data)"><CopyOutlined /></a> <pre>{{ data }} </pre>
+            <a v-if="data.length" @click="copy(data)"><CopyOutlined /></a> {{ 'paths ' + Object.keys(g_paths).length + ', uris ' + g_uris.length + ', grps ' + Object.keys(g_grps).length }} <pre>{{ data }} </pre>
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item label="postUris">
-            <a v-if="postUris.length" @click="copy(JSON.stringify(postUris, null, 4))"><CopyOutlined /></a> <pre>{{ JSON.stringify(postUris, null, 4) }} </pre>
+            <a v-if="postUris.length" @click="copy(JSON.stringify(postUris, null, 4))"><CopyOutlined /></a> {{ 'postUris ' + postUris.length }}<pre>{{ JSON.stringify(postUris, null, 4) }} </pre>
           </a-form-item>
         </a-col>
       </a-row>
@@ -25,13 +25,17 @@
   import { ref } from 'vue';
   import configVue from './config.vue';
   import { UploadOutlined, CopyOutlined } from '@ant-design/icons-vue';
-  import { blob2obj } from '@/api/strUtils';
+  import { custom_upload } from '@/api/strUtils';
   import { basename } from '@/api/path';
 
   const data = ref('');
-  const paths = ref({});
   const postUris = ref([]);
-  const conf = ref({ ign_deprecated: true, grp_name: 'x-apifox-folder' });
+  const def_grp2code = (k, v) => 'export const ' + k.toUpperCase() + 'URI = ' + JSON.stringify(v, null, 4) + ';\n\n';
+  const conf = ref({ ign_deprecated: true, grp_name: 'x-apifox-folder', grp2code: def_grp2code.toString() });
+
+  let g_paths = ref({});
+  let g_uris = ref([]);
+  let g_grps = ref({});
 
   function paths2uris(paths) {
     let uris = [];
@@ -41,17 +45,22 @@
     }
     return uris;
   }
+
   async function handleRequest(info) {
-    await blob2obj(info.file, (e) => (paths.value = JSON.parse(e.target.result).paths ?? {}));
-    const uris = paths2uris(paths.value).sort((a, b) => a.path.localeCompare(b.path));
+    let paths = {};
+    await custom_upload(info, (res) => (paths = JSON.parse(res).paths ?? {}));
+    const uris = paths2uris(paths).sort((a, b) => a.path.localeCompare(b.path));
     let grps = {};
     for (const u of uris) grps[u.group] = { ...grps[u.group], [u.name]: u.path };
     let code = '';
-    for (const k in grps) code += 'export const ' + k.toUpperCase() + 'URI = ' + JSON.stringify(grps[k], null, 4) + ';\n\n';
+    let grp2code = conf.value.grp2code ? eval(conf.value.grp2code) : def_grp2code;
+    for (const k in grps) code += grp2code(k, grps[k]);
     data.value = code;
-    const postUrisgrps = uris.filter((u) => u.post_flag).map((u) => u.path);
+    const postUrisgrps = uris.filter((u) => u.post_flag).map((u) => u.group.toUpperCase() + 'URI.' + u.name);
     postUris.value = postUrisgrps.sort();
-    info.onSuccess('success', info.file);
+    g_paths.value = paths;
+    g_uris.value = uris;
+    g_grps.value = grps;
   }
   const copy = (s) => navigator.clipboard?.writeText(s);
 </script>

@@ -4,23 +4,22 @@
     <configVue v-model:conf="conf" v-model:ignPats="ignPats" />
     <br />
 
-    <a-row>
-      <a-col :span="8">
-        <label>XLIFF/XML </label>
-        <input type="file" @change="upload_xliff" accept=".xliff, .mxliff, text/xml" />
-      </a-col>
-      <a-col :span="8">
-        <a-row class="btnrow"> <button @click="extract">Extract Souces</button> </a-row>
-        <br />
-        <a-row class="btnrow"> <button @click="save">Save</button> </a-row>
-        <br />
-        <a-row class="btnrow"> <button @click="do_test">Test</button> </a-row>
-      </a-col>
-      <a-col :span="8">
-        <label>JSON </label>
-        <input type="file" @change="upload_target" accept=".json, application/JSON" />
-      </a-col>
-    </a-row>
+    <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="XLIFF/XML">
+            <a-upload-dragger accept=".xliff, .mxliff, text/xml" :customRequest="upload_xliff" :maxCount="1"> <UploadOutlined /><p>Click or drag file to this area to upload</p> </a-upload-dragger>
+            <a-button @click="extract">Extract Souces</a-button>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="JSON">
+            <a-upload-dragger accept=".json, application/JSON" :customRequest="upload_target" :maxCount="1"> <UploadOutlined /><p>Click or drag file to this area to upload</p> </a-upload-dragger>
+            <a-button @click="save">Combine&Download</a-button>
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
     <br />
 
     <tableVue v-model:data="filterData" />
@@ -32,10 +31,11 @@
   import actionVue from './action.vue';
   import configVue from './config.vue';
   import tableVue from './table.vue';
-  import { str2file, xml2obj, blob2obj } from '@/api/strUtils';
+  import { str2file, xml2obj, custom_upload } from '@/api/strUtils';
   import { basename, extname } from '@/api/path';
+  import { UploadOutlined, CopyOutlined } from '@ant-design/icons-vue';
 
-  const action = ref({ searchVal: '', postFunc: '(s)=>s.replace(/id\\s*=\\s*\\"\\s*(\\d+)\\s*"/g, "id=\\"$1\\"")' });
+  const action = ref({ searchVal: '', postFunc: '(s)=>s.replace(/id\\s*=\\s*\\"\\s*(\\d+)\\s*"/g, "id=\\"$1\\"")', test: do_test });
   const conf = ref({ idName: 'id', unitName: 'trans-unit', srcName: 'source', tgtName: 'target' });
   const ignPats = ref(['SWITCH.*#']);
 
@@ -69,10 +69,10 @@
     // console.log(obj);
   }
   const upload_xliff = (e) => {
-    info.src = e.target.files[0].name;
-    blob2obj(e.target.files[0], (e) => (map.value = xml2obj((info.xmlDoc = new DOMParser().parseFromString(e.target.result, 'text/xml')), conf.value)));
+    info.src = e.file.name;
+    custom_upload(e.file, (res) => (map.value = xml2obj((info.xmlDoc = new DOMParser().parseFromString(res, 'text/xml')), conf.value)));
   };
-  const upload_target = (e) => blob2obj(e.target.files[0], (e) => jsonProc(e.target.result));
+  const upload_target = (info) => custom_upload(info.file, (res) => jsonProc(res));
 
   const extract = () => {
     const data = {};
@@ -88,9 +88,3 @@
     console.log(typeof postFunc, postFunc, postFunc('test: id = " 3" abc'));
   }
 </script>
-<style scoped>
-  .btnrow button {
-    margin: auto;
-    width: 120px;
-  }
-</style>

@@ -1,30 +1,34 @@
 <template>
-  <div class="page">
-    <div>
-      <label> JSON File </label> <input type="file" accept=".json, application/JSON" @change="upload_json" />
-      <button @click="down_zip">Download Zip</button>
-    </div>
-    <br />
-    <div>
-      <label>JSON Directory </label> <input type="file" webkitdirectory @change="upload_dir" />
-      <button @click="down_json">Download JSON</button>
-    </div>
-
-    <div v-if="Object.keys(files).length" class="detail">
-      <h1>Directory</h1>
-      <pre>{{ JSON.stringify(files, null, 2) }}</pre>
-    </div>
-    <br />
-    <div v-if="Object.keys(root).length" class="detail">
-      <h1>Mono File</h1>
-      <pre>{{ JSON.stringify(root, null, 2) }}</pre>
-    </div>
+  <div>
+    <a-form :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
+      <a-row>
+        <a-col :span="12">
+          <a-form-item label="JSON File">
+            <a-upload-dragger accept=".txt, .json, text/plain" :customRequest="upload_json" :maxCount="1"> <UploadOutlined /><p>Click or drag file to this area to upload</p> </a-upload-dragger>
+            <a-button @click="down_zip">Download Zip</a-button>
+          </a-form-item>
+          <a-form-item v-if="Object.keys(root).length" label="Mono File">
+            <pre>{{ JSON.stringify(root, null, 2) }} </pre>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="JSON Directory">
+            <a-upload-dragger :customRequest="upload_dir" :maxCount="1" directory> <UploadOutlined /><p>Click or drag file to this area to upload</p> </a-upload-dragger>
+            <a-button @click="down_json">Download JSON</a-button>
+          </a-form-item>
+          <a-form-item v-if="Object.keys(files).length" label="Directory">
+            <pre>{{ JSON.stringify(files, null, 2) }} </pre>
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
   </div>
 </template>
 <script setup>
-  import { blob2obj, str2file, blob2file } from '@/api/strUtils';
+  import { custom_upload, str2file, blob2file } from '@/api/strUtils';
   import { ref } from 'vue';
   import * as zip from '@zip.js/zip.js';
+  import { UploadOutlined, CopyOutlined } from '@ant-design/icons-vue';
 
   const root = ref({});
   const files = ref({});
@@ -62,24 +66,13 @@
     blob2file(blob, name + zipExt);
   }
 
-  const upload_json = async (e) => await blob2obj(e.target.files[0], (e1) => do_file_combine({ path: e.target.files[0].name, data: JSON.parse(e1.target.result) }, root.value));
+  const upload_json = async (info) => await custom_upload(info, (res) => do_file_combine({ path: info.file.name, data: JSON.parse(res) }, root.value));
   const down_zip = () => do_file_download();
 
-  async function upload_dir(e) {
-    for (const f of e.target.files) await blob2obj(f, (e) => (files.value[f.webkitRelativePath] = JSON.parse(e.target.result)));
+  async function upload_dir(info) {
+    await custom_upload(info, (res) => (files.value[info.file.webkitRelativePath] = JSON.parse(res)));
     for (const path in files.value) do_file_combine({ path, data: files.value[path] }, root.value);
     // console.log('[upload_dir] root ', root.value);
   }
   const down_json = () => Object.keys(root.value).length && str2file(JSON.stringify(root.value[Object.keys(root.value)[0]], null, indentSpace), Object.keys(root.value)[0] + jsonExt);
 </script>
-<style scoped>
-  .page {
-    text-align: center;
-  }
-  .detail {
-    text-align: left;
-    width: 45%;
-    margin: 10px;
-    float: left;
-  }
-</style>
