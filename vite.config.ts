@@ -4,6 +4,8 @@ import { resolve } from 'path';
 import Components from 'unplugin-vue-components/vite';
 import pkg from './package.json';
 
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+
 const __APP_INFO__ = {
   pkg,
   lastBuildTime: new Date().toLocaleString(),
@@ -25,7 +27,7 @@ const buildlib = {
     output: { globals: { vue: 'Vue' } },
   },
 };
-const builddemo = {};
+const builddemo = { chunkSizeWarningLimit: 2000 };
 
 export default defineConfig(({ command, mode }) => {
   console.log('[vite.config.ts] command %s mode %s', command, mode);
@@ -37,7 +39,7 @@ export default defineConfig(({ command, mode }) => {
         { find: /#\//, replacement: pathResolve('types') + '/' },
       ],
     },
-    plugins: [vue(), Components({})],
+    plugins: [vue(), Components({ resolvers: [AntDesignVueResolver()] })],
     build: mode === 'demo' ? builddemo : buildlib,
     server: { host: true },
     define: { __APP_INFO__: JSON.stringify(__APP_INFO__) },
