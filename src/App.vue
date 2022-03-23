@@ -2,6 +2,7 @@
   <RouterView />
 </template>
 <script setup>
-  const { pkg } = __APP_INFO__;
-  document.title = pkg.name ?? 'Hello World!';
+  import settingVue from '@/views/setting.vue'; // comment this line will cause ConfigProvider.config not work!
+
+  document.title = __APP_INFO__.pkg?.name ?? 'Hello World!';
 </script>

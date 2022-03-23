@@ -43,6 +43,5 @@ export default defineConfig(({ command, mode }) => {
     build: mode === 'demo' ? builddemo : buildlib,
     server: { host: true },
     define: { __APP_INFO__: JSON.stringify(__APP_INFO__) },
-    css: { preprocessorOptions: { less: { javascriptEnabled: true } } },
   };
 });

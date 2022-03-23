@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-for="c in colors">
-      <label>{{ c.name }}</label> <input :style="{ background: c.value }" type="color" v-model="c.value" @change="handleClick(c)" />
+    <div v-for="k in Object.keys(colors)">
+      <label>{{ k }}</label> <input :style="{ background: colors[k] }" type="color" v-model="colors[k]" @input="handleClick(k)" />
     </div>
     <br />
 
-    <div v-for="s in sizes">
-      <label>{{ s.name }}</label> <a-input-number v-model:value="s.value" @change="handleClick(s, 'px')" />
+    <div v-for="k in Object.keys(sizes)">
+      <label>{{ k }}</label> <a-input-number v-model:value="sizes[k]" @change="handleClick(k, 'px')" />
     </div>
   </div>
   <br />
@@ -20,40 +20,36 @@
 </template>
 <script setup>
   import { ref } from 'vue';
+  import { ConfigProvider } from 'ant-design-vue';
 
-  const colors = ref([
-    { name: '@primary-color', value: '#1890ff' },
-    { name: '@link-color', value: '#1890ff' },
-    { name: '@success-color', value: '#52c41a' },
-    { name: '@warning-color', value: '#faad14' },
-    { name: '@error-color', value: '#f5222d' },
-    // { name: '@heading-color', value: 'rgba(0, 0, 0, 0.85)' },
-    // { name: '@text-color', value: 'rgba(0, 0, 0, 0.65)' },
-    // { name: '@text-color-secondary', value: 'rgba(0, 0, 0, 0.45)' },
-    // { name: '@disabled-color', value: 'rgba(0, 0, 0, 0.25)' },
-    { name: '@border-color-base', value: '#d9d9d9' },
-    // { name: '@box-shadow-base', value: '0 2px 8px rgba(0, 0, 0, 0.15)' },
-  ]);
-  const sizes = ref([
-    { name: '@font-size-base', value: 14 },
-    { name: '@border-radius-base', value: 4 },
-  ]);
+  const colors = ref({
+    primaryColor: '#1890ff',
+    linkColor: '#1890ff',
+    infoColor: '#1890ff',
+    successColor: '#52c41a',
+    warningColor: '#faad14',
+    errorColor: '#f5222d',
+    //  headingColor: 'rgba(0, 0, 0, 0.85)' ,
+    //  textColor: 'rgba(0, 0, 0, 0.65)' ,
+    //  name: 'textColor-secondary', value: 'rgba(0, 0, 0, 0.45)' ,
+    //  disabledColor: 'rgba(0, 0, 0, 0.25)' ,
+    borderColor: '#d9d9d9',
+    //  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)' ,
+  });
+  const sizes = ref({ fontSize: 14, borderRadius: 4 });
 
-  function handleClick(c, unit = '') {
-    const obj = { [c.name]: c.value + unit };
-    console.log(JSON.stringify(obj));
-    window.less.modifyVars(obj).catch(() => console.error(`Failed to update theme`));
+  function handleClick() {
+    const unit_sizes = { ...sizes.value };
+    for (const k in unit_sizes) unit_sizes[k] = unit_sizes[k] + 'px';
+    const obj = { ...colors.value, ...unit_sizes };
+    // console.log(JSON.stringify(obj));
+    ConfigProvider.config({ theme: obj });
   }
 </script>
-<style scoped lang="less">
-  @import 'ant-design-vue/lib/style/themes/default.less';
+<style scoped>
   label {
     width: 150px;
     display: inline-block;
     text-align: right;
-  }
-  .test {
-    background-color: @primary-color;
-    font-size: @font-size-base;
   }
 </style>
