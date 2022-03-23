@@ -15,7 +15,3 @@ export const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
-
-export function setupRouter(app: App<Element>) {
-  app.use(router);
-}

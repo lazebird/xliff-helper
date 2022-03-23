@@ -2,10 +2,13 @@
   <div>
     <div class="nav">
       <label>Navigator:</label>
-      <router-link v-for="r in routes" :to="r.path" class="item" :class="r.path === currRoute.path ? 'active' : ''">{{ r.name }}</router-link>
+      <RouterLink v-for="r in routes" :to="r.path" class="item" :class="r.path === currRoute.path ? 'active' : ''">{{ r.name }}</RouterLink>
     </div>
     <div class="body">
-      <router-view></router-view>
+      <RouterView v-slot="{ Component }">
+        <KeepAlive v-if="$route.meta.keepAlive !== false"> <component :is="Component" /> </KeepAlive>
+        <component :is="Component" v-else />
+      </RouterView>
     </div>
   </div>
 </template>
