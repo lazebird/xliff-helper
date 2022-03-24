@@ -14,7 +14,7 @@
         </a-col>
         <a-col :span="12">
           <a-form-item label="postUris">
-            <a v-if="postUris.length" @click="copy(JSON.stringify(postUris, null, 4))"><CopyOutlined /></a> {{ 'postUris ' + postUris.length }}<pre>{{ JSON.stringify(postUris, null, 4) }} </pre>
+            <a v-if="postUris.length" @click="copy(postUris)"><CopyOutlined /></a> {{ 'postUris ' + g_uris.filter((u) => u.post_flag).length }}<pre>{{ postUris }} </pre>
           </a-form-item>
         </a-col>
       </a-row>
@@ -29,7 +29,7 @@
   import { basename } from '@/api/path';
 
   const data = ref('');
-  const postUris = ref([]);
+  const postUris = ref('');
   const def_grp2code = (k, v) => 'export const ' + k.toUpperCase() + 'URI = ' + JSON.stringify(v, null, 4) + ';\n\n';
   const conf = ref({ ign_deprecated: true, grp_name: 'x-apifox-folder', grp2code: def_grp2code.toString() });
 
@@ -57,7 +57,9 @@
     for (const k in grps) code += grp2code(k, grps[k]);
     data.value = code;
     const postUrisgrps = uris.filter((u) => u.post_flag).map((u) => u.group.toUpperCase() + 'URI.' + u.name);
-    postUris.value = postUrisgrps.sort();
+    code = '';
+    for (const u of postUrisgrps.sort()) code += u + ',\n';
+    postUris.value = code;
     g_paths.value = paths;
     g_uris.value = uris;
     g_grps.value = grps;
