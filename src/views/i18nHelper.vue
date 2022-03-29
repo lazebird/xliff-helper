@@ -13,7 +13,7 @@
         </a-col>
         <a-col :span="12">
           <a-form-item label="JSON Directory">
-            <a-upload-dragger :customRequest="upload_dir" :maxCount="1" directory> <UploadOutlined /><p>Click or drag file to this area to upload</p> </a-upload-dragger>
+            <a-upload-dragger :customRequest="upload_dir" directory> <UploadOutlined /><p>Click or drag file to this area to upload</p> </a-upload-dragger>
             <a-button @click="down_json">Download JSON</a-button>
           </a-form-item>
           <a-form-item v-if="Object.keys(files).length" label="Directory">
