@@ -1,6 +1,6 @@
 {
   "name": "@lazebird/jtools",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "keywords": [
     "vue",
     "vue3",
@@ -9,7 +9,8 @@
     "xml",
     "i18n",
     "solitaire",
-    "openAPI"
+    "openAPI",
+    "text process"
   ],
   "author": "lazebird",
   "license": "MIT",
