@@ -70,9 +70,9 @@
   }
   const upload_xliff = (e) => {
     info.src = e.file.name;
-    custom_upload(e.file, (res) => (map.value = xml2obj((info.xmlDoc = new DOMParser().parseFromString(res, 'text/xml')), conf.value)));
+    custom_upload(e, (res) => (map.value = xml2obj((info.xmlDoc = new DOMParser().parseFromString(res, 'text/xml')), conf.value)));
   };
-  const upload_target = (info) => custom_upload(info.file, (res) => jsonProc(res));
+  const upload_target = (e) => custom_upload(e, (res) => jsonProc(res));
 
   const extract = () => {
     const data = {};

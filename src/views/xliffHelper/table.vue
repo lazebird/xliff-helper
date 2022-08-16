@@ -1,5 +1,5 @@
 <template>
-  <a-table v-if="data.length" :dataSource="data" :columns="columns" :rowKey="(record, index) => index" class="ant-table-striped" :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" />
+  <a-table v-if="data.length" :dataSource="data" :columns="columns" class="ant-table-striped" :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" />
 </template>
 
 <script setup>
