@@ -60,7 +60,7 @@
         else m.target.innerHTML = obj[m.id] ?? m.tgtText;
         m.newtgt = m.target.innerHTML;
         if (m.target.getAttribute('state') === 'needs-translation') m.target.setAttribute('state', 'translated');
-        if (m.unit.getAttribute('m:confirmed') === '0') m.unit.setAttribute('m:confirmed', '1');
+        if (m.unit?.getAttribute('m:confirmed') === '0') m.unit.setAttribute('m:confirmed', '1');
         // console.log('[jsonProc] attr names ', m.unit.getAttributeNames());
       } catch (e) {
         console.log(e, m, isIgnore(m.srcText), obj[m.id]);
