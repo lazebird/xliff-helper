@@ -17,7 +17,7 @@
   const options = [
     { name: 'prettier', value: `(n) => { const o = JSON.parse(n); return JSON.stringify(o, null, 4); }` },
     {
-      name: 'po2cvs',
+      name: 'po2csv',
       value: `
         (str) => {
           const lines = str.replace('\\r', '').split('\\n').filter(l=>l.length);
@@ -33,7 +33,7 @@
       `,
     },
     {
-      name: 'cvs2po',
+      name: 'csv2po',
       value: `
         (str) => {
           const lines = str.replace('\\r', '').split('\\n').filter(l=>l.length);
