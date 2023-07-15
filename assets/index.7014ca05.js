@@ -1,4 +1,4 @@
-import{a as ref,L as computed,o as openBlock,b as createElementBlock,f as createVNode,i as unref,d as createBaseVNode}from"./vendor.58b05717.js";import inputVue from"./input.f3d5fe79.js";import codeVue from"./code.5c6ba1f9.js";import outputVue from"./output.b960d5cb.js";/* empty css               */import"./index.35c8cff3.js";const _hoisted_1={style:{margin:"20px"}},_hoisted_2=createBaseVNode("br",null,null,-1),_hoisted_3=createBaseVNode("br",null,null,-1),_sfc_main={setup(__props){const input=ref({name:"Input",content:""}),options=[{name:"prettier",value:"(n) => { const o = JSON.parse(n); return JSON.stringify(o, null, 4); }"},{name:"po2cvs",value:`
+import{a as ref,L as computed,o as openBlock,b as createElementBlock,f as createVNode,i as unref,d as createBaseVNode}from"./vendor.58b05717.js";import inputVue from"./input.bd281e5e.js";import codeVue from"./code.ffc37695.js";import outputVue from"./output.cfe07332.js";/* empty css               */import"./index.f545be85.js";const _hoisted_1={style:{margin:"20px"}},_hoisted_2=createBaseVNode("br",null,null,-1),_hoisted_3=createBaseVNode("br",null,null,-1),_sfc_main={setup(__props){const input=ref({name:"Input",content:""}),options=[{name:"prettier",value:"(n) => { const o = JSON.parse(n); return JSON.stringify(o, null, 4); }"},{name:"po2csv",value:`
         (str) => {
           const lines = str.replace('\\r', '').split('\\n').filter(l=>l.length);
           if (lines.length & 1) return "length error: "+ lines.length;
@@ -10,7 +10,7 @@ import{a as ref,L as computed,o as openBlock,b as createElementBlock,f as create
           for (const k of Object.keys(obj).sort()) result += k + ',' + obj[k] + '\\r\\n';
           return result;
         }
-      `},{name:"cvs2po",value:`
+      `},{name:"csv2po",value:`
         (str) => {
           const lines = str.replace('\\r', '').split('\\n').filter(l=>l.length);
           const chunks = lines.map(l=>l.split(','));
