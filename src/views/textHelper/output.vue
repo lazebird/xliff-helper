@@ -1,13 +1,22 @@
 <template>
-  <label @click="copy(data.content)">Output <CopyOutlined /></label>
+  <label style="margin-right: 10px">Output</label>
+  <a-button @click="copy(data.content)" type="text" :loading="loading">
+    <template #icon><CopyOutlined /></template>
+  </a-button>
   <div class="stat" :class="data.class"> {{ data.content }} </div>
 </template>
 <script setup>
   import { CopyOutlined } from '@ant-design/icons-vue';
+  import { ref } from 'vue';
 
   defineProps({ data: { type: Object, required: true } });
+  const loading = ref(false);
 
-  const copy = (s) => navigator.clipboard?.writeText(s);
+  function copy(s) {
+    loading.value = true;
+    navigator.clipboard?.writeText(s);
+    window.setTimeout(() => (loading.value = false), 500);
+  }
 </script>
 <style scoped>
   .stat {
