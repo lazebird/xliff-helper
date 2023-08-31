@@ -13,7 +13,7 @@ function arrayDiff(arr, newarr) {
     diffarr[i] = undefined;
     tmparr.splice(j, 1);
   }
-  return diffarr.filter((e) => e);
+  return diffarr.filter((e) => e !== undefined);
 }
 
 export { arrayFlatten, arrayDiff };

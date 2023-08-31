@@ -30,11 +30,21 @@
     let flatLayout = [];
     arrayFlatten(layout.value, flatLayout);
     const names = info.value.names.map((e) => e.fmt);
+    const uninames = [...new Set(names.filter((e) => e))];
     const diffarr = arrayDiff(flatLayout, names);
+    console.log('diffarr ', diffarr);
     const duparr = diffarr.filter((e) => flatLayout.includes(e));
     const orgduparr = info.value.names.filter((e) => duparr.includes(e.fmt)).map((e) => e.org);
-    const unknownarr = diffarr.filter((e) => !duparr.includes(e)).map((e) => info.value.names.find((n) => n.fmt === e)?.org);
+    const orgnames = JSON.parse(JSON.stringify(info.value.names));
+    const unknownnames = diffarr.filter((e) => !duparr.includes(e));
+    var unknownarr = [];
+    for (const n of unknownnames) {
+      var i = orgnames.findIndex((e) => e.fmt === n);
+      if (i < 0) continue;
+      unknownarr.push(orgnames[i].org);
+      orgnames.splice(i, 1);
+    }
     // console.log('diffarr ', JSON.stringify(diffarr));
-    return { total: flatLayout.length, count: info.value.names.length, unknown: JSON.stringify(unknownarr), dup: JSON.stringify(orgduparr) };
+    return { total: flatLayout.length, count: uninames.length, unknown: JSON.stringify(unknownarr), dup: JSON.stringify(orgduparr) };
   });
 </script>
