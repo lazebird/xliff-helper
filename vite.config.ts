@@ -39,7 +39,7 @@ export default defineConfig(({ command, mode }) => {
         { find: /#\//, replacement: pathResolve('types') + '/' },
       ],
     },
-    plugins: [vue(), Components({ resolvers: [AntDesignVueResolver()] })],
+    plugins: [vue(), Components({ resolvers: [AntDesignVueResolver({ importStyle: 'css-in-js' })] })],
     build: mode === 'demo' ? builddemo : buildlib,
     server: { host: true },
     define: { __APP_INFO__: JSON.stringify(__APP_INFO__) },

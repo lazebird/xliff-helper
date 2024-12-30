@@ -24,7 +24,7 @@
 </script>
 <style scoped>
   .nav {
-    background-color: blue;
+    background-color: lightblue;
     color: white;
     font-weight: bolder;
     font-size: large;

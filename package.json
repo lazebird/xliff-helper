@@ -14,6 +14,7 @@
   ],
   "author": "lazebird",
   "license": "MIT",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/lazebird/jtools/issues"
   },
@@ -41,29 +42,29 @@
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js"
   },
   "dependencies": {
-    "@ant-design/icons-vue": "^6.1.0",
-    "@zip.js/zip.js": "^2.4.7",
-    "ant-design-vue": "3.1.0-rc.2",
-    "less": "^4.1.2",
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.14"
+    "@ant-design/icons-vue": "^7.0.1",
+    "@zip.js/zip.js": "^2.7.54",
+    "ant-design-vue": "4.2.6",
+    "less": "^4.2.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@types/node": "^20.5.7",
-    "@typescript-eslint/eslint-plugin": "^5.12.0",
-    "@typescript-eslint/parser": "^5.12.0",
-    "@vitejs/plugin-vue": "^2.2.0",
-    "@vue/compiler-sfc": "^3.2.31",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/compiler-sfc": "^3.5.13",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "^8.9.0",
-    "eslint-define-config": "^1.2.5",
-    "eslint-plugin-vue": "^8.4.1",
-    "husky": "^7.0.4",
-    "typescript": "^4.5.5",
-    "unplugin-vue-components": "^0.17.18",
-    "vite": "^2.8.3",
-    "vue-eslint-parser": "^8.2.0",
-    "vue-tsc": "^0.29.8"
+    "eslint": "^9.17.0",
+    "eslint-define-config": "^2.1.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "husky": "^9.1.7",
+    "typescript": "^5.7.2",
+    "unplugin-vue-components": "^0.28.0",
+    "vite": "^6.0.6",
+    "vue-eslint-parser": "^9.4.3",
+    "vue-tsc": "^2.2.0"
   },
   "config": {
     "commitizen": {
